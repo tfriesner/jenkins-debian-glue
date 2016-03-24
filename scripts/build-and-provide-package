@@ -749,7 +749,7 @@ EOF
         --build $sourcefile \
         --basepath "${COWBUILDER_BASE}" --debbuildopts "${DEBBUILDOPTS:-}" \
         --hookdir "${PBUILDER_HOOKDIR}" --bindmounts "$BINDMOUNTS" --configfile="${pbuilderrc}" \
-        --http-proxy "${HTTP_PROXY}"
+        --http-proxy "${PROXY:-}"
       [ $? -eq 0 ] || bailout 1 "Error: Failed to build with cowbuilder."
       ;;
     amd64|all|*)
@@ -758,7 +758,7 @@ EOF
         --build $sourcefile \
         --basepath "${COWBUILDER_BASE}" --debbuildopts "${DEBBUILDOPTS:-}" \
         --hookdir "${PBUILDER_HOOKDIR}" --bindmounts "$BINDMOUNTS" --configfile="${pbuilderrc}" \
-        --http-proxy "${HTTP_PROXY}"
+        --http-proxy "${PROXY:-}"
       [ $? -eq 0 ] || bailout 1 "Error: Failed to build with cowbuilder."
       ;;
     *)
