@@ -74,6 +74,10 @@ create_base_tgz() {
     echo "*** DEBOOTSTRAP_OPTIONS is set [$DEBOOTSTRAP_OPTIONS], using for debootstrapping ***"
   fi
 
+  if [ -n "${PROXY:-}" ] ; then
+    export http_proxy="$PROXY"
+  fi
+
   debootstrap --variant=minbase \
               --components="$components" \
               --arch="$architecture" \

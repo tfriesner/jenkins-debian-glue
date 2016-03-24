@@ -365,6 +365,11 @@ cowbuilder_init() {
         echo "DEBOOTSTRAPOPTS=(${DEBOOTSTRAPOPTS[@]:-} '--keyring' '/usr/share/keyrings/debian-archive-keyring.gpg' )" >> "$pbuilderrc"
       fi
     fi
+    elif [ $(cat /etc/*-release | grep ID=hlinux) == 'ID=hlinux' ] ; then
+       if [ -r /usr/share/keyrings/hlinux-archive-keyring.gpg ] ; then
+         echo "*** Build for hpe Linux detected.  Using its gpg key ****"
+         echo "DEBOOTSTRAPOPTS=(${DEBOOTSTRAPOPTS[@]:-} '--keyring' '/usr/share/keyrings/hlinux-archive-keyring.gpg' )" >> "$pbuilderrc"
+       fi
   fi
 
   echo "*** Listing pbuilder configuration file as reference: ***"
@@ -398,7 +403,7 @@ cowbuilder_init() {
          --debootstrapopts --arch --debootstrapopts "$arch" \
          --debootstrapopts --variant=buildd --configfile="${pbuilderrc}" \
          --hookdir "${PBUILDER_HOOKDIR}" \
-         --http-proxy "${PROXY}"
+         --http-proxy "${PROXY:-}"
     [ $? -eq 0 ] || exit 2
   else
     if [ "${SKIP_COWBUILDER_UPDATE:-}" = "true" ] ; then
